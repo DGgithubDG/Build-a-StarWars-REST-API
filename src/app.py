@@ -94,34 +94,64 @@ def create_user():
     user1 = User(email=request_body_user["email"], password=request_body_user["password"])
     db.session.add(user1)
     db.session.commit
+    request_body_user = request.get_json()
 
     return jsonify(request_body_user) , 200
 
-    
-    
-
 @app.route('/person', methods=["POST"])
-def add_person():
-    print("i'm here")
-    print(request)
-    first_name = request.json[0]['first_name']
-    last_name = request.json[0]['last_name']
+def create_person():
+    request_body_person = request.get_json()
+    person1 = Person(first_name=request_body_person["first_name"], last_name=request_body_person["last_name"])
+    db.session.add(person1)
+    db.session.commit
+    request_body_person = request.get_json()
 
-    person = Person(
-        first_name = first_name,
-        last_name = last_name,
-       # is_active = False
-    )
-
-    person.create()
-
-    return jsonify(person.serialize())
+    return jsonify(request_body_person) , 200
 
 @app.route('/planet', methods=["POST"])
 def create_planet():
     request_body_planet = request.get_json()
-    print(request_body_planet)
-    return jsonify(request_body_planet), 200
+    planet1 = Planet(planet_name=request_body_planet["planet_name"], planet_size=request_body_planet["planet_size"])
+    db.session.add(planet1)
+    db.session.commit
+    request_body_planet = request.get_json()
+
+    return jsonify(request_body_planet) , 200
+
+@app.route('/user/<int:user_id>', methods=["DELETE"])
+def delete_user(user_id):
+    raise APIException("User not found", status_code=404)
+   # planet1 = Planet(planet_name=request_body_planet["planet_name"], planet_size=request_body_planet["planet_size"])
+    db.session.delete(user1)
+    db.session.commit
+   # request_body_planet = request.get_json()
+
+    return jsonify("deleted") , 200
+    
+    
+
+# @app.route('/person', methods=["POST"])
+# def add_person():
+#     print("i'm here")
+#     print(request)
+#     first_name = request.json[0]['first_name']
+#     last_name = request.json[0]['last_name']
+
+#     person = Person(
+#         first_name = first_name,
+#         last_name = last_name,
+#        # is_active = False
+#     )
+
+#     person.create()
+
+#     return jsonify(person.serialize())
+
+# @app.route('/planet', methods=["POST"])
+# def create_planet():
+#     request_body_planet = request.get_json()
+#     print(request_body_planet)
+#     return jsonify(request_body_planet), 200
 
 #@app.route('/user', methods=['POST'])
 #def add_user():
