@@ -8,7 +8,7 @@ from flask_swagger import swagger
 from flask_cors import CORS
 from utils import APIException, generate_sitemap
 from admin import setup_admin
-from models import db, User, Person, Planet
+from models import db, User, Person, Planet,FavoritePerson,FavoritePlanet
 
 
 # from models import Person
@@ -128,7 +128,27 @@ def delete_user(user_id):
 
     return jsonify("deleted") , 200
     
+@app.route('/favorite/planet/<int:planet_id>', methods=["DELETE"])
+def delete_favoriteplanet(planet_id):
+    raise APIException("User not found", status_code=404)
+   # planet1 = Planet(planet_name=request_body_planet["planet_name"], planet_size=request_body_planet["planet_size"])
+    db.session.delete(favoriteplanet1)
+    db.session.commit
+   # request_body_planet = request.get_json()
+
+    return jsonify("deleted fav planet") , 200
     
+@app.route('/favorite/person/<int:person_id>', methods=["DELETE"])
+def delete_favoriteperson(person_id):
+    raise APIException("User not found", status_code=404)
+   # planet1 = Planet(planet_name=request_body_planet["planet_name"], planet_size=request_body_planet["planet_size"])
+    db.session.delete(favoriteperson1)
+    db.session.commit
+   # request_body_planet = request.get_json()
+
+    return jsonify("deleted fav person") , 200
+    
+
 
 # @app.route('/person', methods=["POST"])
 # def add_person():
